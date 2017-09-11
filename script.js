@@ -31,7 +31,7 @@ function setGameElements() {
         resultsElem.style.display = 'block';
       break;
     case 'ended':
-        newGameBtn.innerText = 'Jeszcze raz';
+        newGameBtn.innerText = 'Play again';
     case 'notStarted':
     default:
         newGameElem.style.display = 'block';
@@ -47,16 +47,15 @@ var playerPointsElem = document.getElementById('js-playerPoints'),
     computerPointsElem = document.getElementById('js-computerPoints');
 
 function newGame() {
-  player.name = prompt('Please enter your name', 'imię gracza');
+  player.name = prompt('Please enter your name', " ");
   if (player.name) {
     player.score = computer.score = 0;
     gameState = 'started';
     setGameElements();
 
-    playerNameElem.innerHTML = player.name;
-    // setGamePoints(); // This function has not been created yet
+	playerNameElem.innerHTML = player.name;
+	setGamePoints(); 
   }
-
 }
 
 function playerPick(playerPick) {
@@ -67,6 +66,8 @@ function getComputerPick() {
     var possiblePicks = ['rock', 'paper', 'scissors'];
     return possiblePicks[Math.floor(Math.random()*3)];
 }
+
+getComputerPick();
 
 var playerPickElem = document.getElementById('js-playerPick'),
     computerPickElem = document.getElementById('js-computerPick'),
@@ -102,7 +103,8 @@ function checkRoundWinner(playerPick, computerPick) {
         computerResultElem.innerHTML = "Win!";
         computer.score++;
     }
-
+	setGamePoints();
+	gameOver();
 }
 
 function playerPick(playerPick) {
@@ -118,3 +120,16 @@ function setGamePoints() {
     playerPointsElem.innerHTML = player.score;
     computerPointsElem.innerHTML = computer.score;
 }
+
+function gameOver() {
+	if (player.score == 10) {
+		alert('Congratulations! ' + player.name + ' won!')
+		gameState = 'ended'
+		
+}	else if (computer.score == 10) { 
+		alert("I'm sorry! " + player.name + " lost." )
+		gameState = 'ended'
+}
+setGameElements();
+
+};
